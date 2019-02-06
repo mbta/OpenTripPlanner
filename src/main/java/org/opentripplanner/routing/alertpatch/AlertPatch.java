@@ -82,6 +82,15 @@ public class AlertPatch implements Serializable {
         return false;
     }
 
+    public boolean cannotRideThrough() {
+        return alert.getEffectDetails().equals("SUSPENSION");
+    }
+
+    public boolean cannotAlightOrBoard() {
+        String[] noBoarding = {"SUSPENSION", "STATION_CLOSURE", "STOP_CLOSURE", "DOCK_CLOSURE"};
+        return Arrays.asList(noBoarding).contains(alert.getEffectDetails());
+    }
+
     @XmlElement
     public String getId() {
         return id;
@@ -129,6 +138,12 @@ public class AlertPatch implements Serializable {
                         if (stop == null || stop.equals(tripPattern.stopPattern.stops[i])) {
                             graph.addAlertPatch(tripPattern.boardEdges[i], this);
                             graph.addAlertPatch(tripPattern.alightEdges[i], this);
+                        }
+                    }
+
+                    for (int i = 0; i < tripPattern.hopEdges.length; i++) {
+                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getEndStop())) {
+                            graph.addAlertPatch(tripPattern.hopEdges[i], this);
                         }
                     }
                 }
@@ -190,6 +205,12 @@ public class AlertPatch implements Serializable {
                         if (stop == null || stop.equals(tripPattern.stopPattern.stops[i])) {
                             graph.removeAlertPatch(tripPattern.boardEdges[i], this);
                             graph.removeAlertPatch(tripPattern.alightEdges[i], this);
+                        }
+                    }
+
+                    for (int i = 0; i < tripPattern.hopEdges.length; i++) {
+                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getEndStop())) {
+                            graph.removeAlertPatch(tripPattern.hopEdges[i], this);
                         }
                     }
                 }

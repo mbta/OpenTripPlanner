@@ -31,6 +31,25 @@ public class Alert implements Serializable {
     @XmlElement
     public Date effectiveEndDate;
 
+    private String effectDetails;
+    private String id;
+
+    public String getEffectDetails() {
+        return effectDetails;
+    }
+
+    public void setEffectDetails(String effectDetails) {
+        this.effectDetails = effectDetails;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public static HashSet<Alert> newSimpleAlertSet(String text) {
         Alert note = createSimpleAlerts(text);
         HashSet<Alert> notes = new HashSet<Alert>(1);
