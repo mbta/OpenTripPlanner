@@ -136,7 +136,7 @@ public class TransitBoardAlight extends TablePatternEdge implements OnboardEdge 
         }
 
         for (AlertPatch alertPatch: options.getRoutingContext().graph.getAlertPatches(this)) {
-            if (alertPatch.cannotAlightOrBoard() && alertPatch.displayDuring(s0)) {
+            if ((alertPatch.cannotBoard() || alertPatch.cannotAlight()) && alertPatch.displayDuring(s0)) {
                 return null;
             }
         }

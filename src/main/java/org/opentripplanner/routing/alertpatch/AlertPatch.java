@@ -9,11 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.opentripplanner.model.Agency;
-import org.opentripplanner.model.FeedScopedId;
-import org.opentripplanner.model.Route;
-import org.opentripplanner.model.Stop;
-import org.opentripplanner.model.Trip;
+import com.google.transit.realtime.GtfsRealtime;
+import org.opentripplanner.model.*;
 import org.opentripplanner.api.adapters.AgencyAndIdAdapter;
 import org.opentripplanner.routing.core.State;
 import org.opentripplanner.routing.edgetype.PreAlightEdge;
@@ -82,13 +79,21 @@ public class AlertPatch implements Serializable {
         return false;
     }
 
-    public boolean cannotRideThrough() {
-        return alert.getEffectDetails().equals("SUSPENSION");
+    private boolean serviceAffected() {
+        GtfsRealtime.Alert.Effect effect = getAlert().getEffect();
+        return effect.equals(GtfsRealtime.Alert.Effect.NO_SERVICE) || effect.equals(GtfsRealtime.Alert.Effect.DETOUR);
     }
 
-    public boolean cannotAlightOrBoard() {
-        String[] noBoarding = {"SUSPENSION", "STATION_CLOSURE", "STOP_CLOSURE", "DOCK_CLOSURE"};
-        return Arrays.asList(noBoarding).contains(alert.getEffectDetails());
+    public boolean cannotRideThrough() {
+        return serviceAffected() && enhancedAlerts.stream().anyMatch(EnhancedAlert::cannotRideThrough);
+    }
+
+    public boolean cannotBoard() {
+        return serviceAffected() && enhancedAlerts.stream().anyMatch(EnhancedAlert::cannotBoard);
+    }
+
+    public boolean cannotAlight() {
+        return serviceAffected() && enhancedAlerts.stream().anyMatch(EnhancedAlert::cannotAlight);
     }
 
     @XmlElement
@@ -98,6 +103,16 @@ public class AlertPatch implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    private List<EnhancedAlert> enhancedAlerts;
+
+    public List<EnhancedAlert> getEnhancedAlerts() {
+        return enhancedAlerts;
+    }
+
+    public void setEnhancedAlerts(List<EnhancedAlert> enhancedAlerts) {
+        this.enhancedAlerts = enhancedAlerts;
     }
 
     public void apply(Graph graph) {
