@@ -36,6 +36,8 @@ public class AlertPatch implements Serializable {
 
     private String id;
 
+    private List<EnhancedAlert> enhancedAlerts;
+
     private Alert alert;
 
     private List<TimePeriod> timePeriods = new ArrayList<TimePeriod>();
@@ -81,7 +83,7 @@ public class AlertPatch implements Serializable {
 
     private boolean serviceAffected() {
         GtfsRealtime.Alert.Effect effect = getAlert().getEffect();
-        return effect.equals(GtfsRealtime.Alert.Effect.NO_SERVICE) || effect.equals(GtfsRealtime.Alert.Effect.DETOUR);
+        return GtfsRealtime.Alert.Effect.NO_SERVICE.equals(effect) || GtfsRealtime.Alert.Effect.DETOUR.equals(effect);
     }
 
     public boolean cannotRideThrough() {
@@ -104,8 +106,6 @@ public class AlertPatch implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
-    private List<EnhancedAlert> enhancedAlerts;
 
     public List<EnhancedAlert> getEnhancedAlerts() {
         return enhancedAlerts;
