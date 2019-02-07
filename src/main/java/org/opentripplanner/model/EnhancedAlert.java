@@ -55,11 +55,11 @@ public class EnhancedAlert {
     public EnhancedAlert() {}
 
     public boolean appliesTo(AlertPatch alertPatch) {
-        if (this.route != null && !this.route.equals(alertPatch.getRoute())) {
+        if (route != null && !route.equals(alertPatch.getRoute())) {
             return false;
-        } else if (this.stop != null && !this.stop.equals(alertPatch.getStop())) {
+        } else if (stop != null && !stop.equals(alertPatch.getStop())) {
             return false;
-        } else if (this.trip != null && !this.trip.equals(alertPatch.getTrip())) {
+        } else if (trip != null && !trip.equals(alertPatch.getTrip())) {
             return false;
         }
 
