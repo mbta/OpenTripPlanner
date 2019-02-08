@@ -36,7 +36,7 @@ public class AlertPatch implements Serializable {
 
     private String id;
 
-    private List<EnhancedAlert> enhancedAlerts;
+    private List<EnhancedAlert> enhancedAlerts = new ArrayList<>();
 
     private Alert alert;
 

@@ -112,7 +112,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
     }
 
     private void updateGraph(Graph graph) {
-        for (AlertPatch alertPatch: graph.getAlertPatches()) {
+        for (AlertPatch alertPatch: graph.getAllAlertPatches()) {
             List<EnhancedAlert> newAlerts = new ArrayList<>();
 
             List<EnhancedAlert> enhancedAlerts = alertDetails.get(alertPatch.getAlert().getId());

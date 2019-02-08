@@ -396,17 +396,17 @@ public class Graph implements Serializable {
 
 
     /**
-     * Get {@link AlertPatch} {@link Set} for the graph.
-     * @return The {@link AlertPatch} set for the graph
+     * Get {@link AlertPatch} array for the graph.
+     * @return The {@link AlertPatch} array for the graph
      */
-    public Set<AlertPatch> getAlertPatches() {
+    public AlertPatch[] getAllAlertPatches() {
         Set<AlertPatch> result = new HashSet<>();
 
         synchronized (alertPatches) {
             this.alertPatches.values().forEach(result::addAll);
         }
 
-        return result;
+        return result.toArray(new AlertPatch[0]);
     }
 
     /**
