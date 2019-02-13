@@ -77,7 +77,13 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
         JsonNode json = mapper.readTree(jsonString);
 
         for (JsonNode node: json.get("entity")) {
-            if (!node.hasNonNull("alert") || !node.get("alert").hasNonNull("informed_entity")) {
+            if (!node.hasNonNull("alert")) {
+                continue;
+            }
+
+            JsonNode alert = node.get("alert");
+
+            if (!alert.hasNonNull("informed_entity")) {
                 continue;
             }
 
@@ -85,17 +91,17 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
 
             List<EnhancedAlert> enhancedAlerts = new ArrayList<>();
 
-            for (JsonNode ie: node.get("alert").get("informed_entity")) {
-                EnhancedAlert alert = new EnhancedAlert();
+            for (JsonNode ie: alert.get("informed_entity")) {
+                EnhancedAlert enhancedAlert = new EnhancedAlert();
 
                 if (ie.hasNonNull("route_id")) {
-                    alert.setRoute(new FeedScopedId(AGENCY_ID, ie.get("route_id").textValue()));
+                    enhancedAlert.setRoute(new FeedScopedId(AGENCY_ID, ie.get("route_id").textValue()));
                 }
                 if (ie.hasNonNull("stop_id")) {
-                    alert.setStop(new FeedScopedId(AGENCY_ID, ie.get("stop_id").textValue()));
+                    enhancedAlert.setStop(new FeedScopedId(AGENCY_ID, ie.get("stop_id").textValue()));
                 }
                 if (ie.hasNonNull("trip") && ie.get("trip").hasNonNull("trip_id")) {
-                    alert.setTrip(new FeedScopedId(AGENCY_ID, ie.get("trip").get("trip_id").textValue()));
+                    enhancedAlert.setTrip(new FeedScopedId(AGENCY_ID, ie.get("trip").get("trip_id").textValue()));
                 }
 
                 List<EnhancedAlert.AffectedActivity> activities = new ArrayList<>();
@@ -104,9 +110,9 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
                     activities.add(EnhancedAlert.AffectedActivity.valueOf(activity.textValue()));
                 }
 
-                alert.setActivities(activities);
+                enhancedAlert.setActivities(activities);
 
-                enhancedAlerts.add(alert);
+                enhancedAlerts.add(enhancedAlert);
             }
 
             result.put(id, enhancedAlerts);
