@@ -77,13 +77,13 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
         JsonNode json = mapper.readTree(jsonString);
 
         for (JsonNode node: json.get("entity")) {
-            String id = node.get("id").textValue();
-
-            List<EnhancedAlert> enhancedAlerts = new ArrayList<>();
-
             if (!node.hasNonNull("alert") || !node.get("alert").hasNonNull("informed_entity")) {
                 continue;
             }
+
+            String id = node.get("id").textValue();
+
+            List<EnhancedAlert> enhancedAlerts = new ArrayList<>();
 
             for (JsonNode ie: node.get("alert").get("informed_entity")) {
                 EnhancedAlert alert = new EnhancedAlert();
