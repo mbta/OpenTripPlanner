@@ -67,6 +67,10 @@ public class DirectTransferGenerator implements GraphBuilderModule {
 
             /* Skip stops that are entrances to stations or whose entrances are coded separately */
             if (!ts0.isStreetLinkable()) continue;
+
+            /* Skip stops already linked through GTFS transfers.txt */
+            if (ts0.hasGtfsTransfers()) continue;
+
             if (++nLinkableStops % 1000 == 0) {
                 LOG.info("Linked {} stops", nLinkableStops);
             }
