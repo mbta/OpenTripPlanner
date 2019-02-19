@@ -96,7 +96,7 @@ public class NearbyStopFinder {
             /* Filter out destination stops that are already reachable via pathways or transfers. */
             // FIXME why is the above comment relevant here? how does the next line achieve this?
             TransitStop ts1 = stopAtDistance.tstop;
-            if (!ts1.isStreetLinkable() || ts1.hasGtfsTransfers()) continue;
+            if (!ts1.isStreetLinkable()) continue;
             /* Consider this destination stop as a candidate for every trip pattern passing through it. */
             for (TripPattern pattern : graph.index.patternsForStop.get(ts1.getStop())) {
                 closestStopForPattern.putMin(pattern, stopAtDistance);
