@@ -80,21 +80,34 @@ public class NearbyStopFinder {
     }
 
     /**
-     * Find all unique nearby stops
+     * Find all unique nearby stops that are the closest stop on some trip pattern.
      * Note that the result will include the origin vertex if it is an instance of TransitStop.
      * This is intentional: we don't want to return the next stop down the line for trip patterns that pass through the
      * origin vertex.
      */
     public Set<StopAtDistance> findNearbyStopsConsideringPatterns (Vertex vertex) {
-        Set<StopAtDistance> uniqueStops = Sets.newHashSet();
+
+        /* Track the closest stop on each pattern passing nearby. */
+        SimpleIsochrone.MinMap<TripPattern, StopAtDistance> closestStopForPattern =
+                new SimpleIsochrone.MinMap<TripPattern, StopAtDistance>();
 
         /* Iterate over nearby stops via the street network or using straight-line distance, depending on the graph. */
         for (NearbyStopFinder.StopAtDistance stopAtDistance : findNearbyStops(vertex)) {
-            if (stopAtDistance.tstop.isStreetLinkable()) {
-                uniqueStops.add(stopAtDistance);
+            /* Filter out destination stops that are already reachable via pathways or transfers. */
+            // FIXME why is the above comment relevant here? how does the next line achieve this?
+            TransitStop ts1 = stopAtDistance.tstop;
+            if (!ts1.isStreetLinkable()) continue;
+            /* Consider this destination stop as a candidate for every trip pattern passing through it. */
+            for (TripPattern pattern : graph.index.patternsForStop.get(ts1.getStop())) {
+                closestStopForPattern.putMin(pattern, stopAtDistance);
             }
         }
+
+        /* Make a transfer from the origin stop to each destination stop that was the closest stop on any pattern. */
+        Set<StopAtDistance> uniqueStops = Sets.newHashSet();
+        uniqueStops.addAll(closestStopForPattern.values());
         return uniqueStops;
+
     }
 
 
