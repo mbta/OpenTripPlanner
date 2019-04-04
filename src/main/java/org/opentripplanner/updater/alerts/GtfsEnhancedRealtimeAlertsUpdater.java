@@ -21,21 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 
-/**
- * GTFS-RT alerts updater
- *
- * Usage example ('myalert' name is an example) in file 'Graph.properties':
- *
- * <pre>
- * myalert.type = real-time-alerts
- * myalert.frequencySec = 60
- * myalert.url = http://host.tld/path
- * myalert.earlyStartSec = 3600
- * myalert.feedId = TA
- * </pre>
- */
+
 public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
-    private static final Logger LOG = LoggerFactory.getLogger(GtfsRealtimeAlertsUpdater.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GtfsEnhancedRealtimeAlertsUpdater.class);
 
     private GraphUpdaterManager updaterManager;
 
