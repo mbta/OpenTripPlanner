@@ -61,7 +61,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
         if (config.path("fuzzyTripMatching").asBoolean(false)) {
             this.fuzzyTripMatcher = new GtfsRealtimeFuzzyTripMatcher(graph.index);
         }
-        LOG.info("Creating real-time alert updater running every {} seconds : {}", pollingPeriodSeconds, url);
+        LOG.info("Creating enhanced real-time alert (json) updater running every {} seconds : {}", pollingPeriodSeconds, url);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
         try {
             InputStream data = HttpUtils.getData(url);
             if (data == null) {
-                throw new RuntimeException("Failed to get data from url " + url);
+                throw new RuntimeException("Failed to get json data from url " + url);
             }
 
             final FeedMessage feed = parseJson(IOUtils.toString(data));
@@ -101,7 +101,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
 
             lastTimestamp = feedTimestamp;
         } catch (Exception e) {
-            LOG.error("Error reading gtfs-realtime feed from " + url, e);
+            LOG.error("Error reading enhanced gtfs-realtime json feed from " + url, e);
         }
     }
 
@@ -241,6 +241,6 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
     }
 
     public String toString() {
-        return "GtfsRealtimeUpdater(" + url + ")";
+        return "GtfsEnhancedRealtimeAlertsUpdater(" + url + ")";
     }
 }
