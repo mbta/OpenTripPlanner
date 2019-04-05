@@ -36,7 +36,7 @@ public class AlertPatch implements Serializable {
 
     private String id;
 
-    private List<String> activities = new ArrayList<>();
+    private List<String> activities = Arrays.asList("RIDE", "BOARD", "EXIT");
 
     private Alert alert;
 
