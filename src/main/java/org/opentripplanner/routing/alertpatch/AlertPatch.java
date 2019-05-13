@@ -166,7 +166,7 @@ public class AlertPatch implements Serializable {
                     }
 
                     for (int i = 0; i < tripPattern.hopEdges.length; i++) {
-                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getEndStop())) {
+                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getBeginStop())) {
                             graph.addAlertPatch(tripPattern.hopEdges[i], this);
                         }
                     }
@@ -233,7 +233,7 @@ public class AlertPatch implements Serializable {
                     }
 
                     for (int i = 0; i < tripPattern.hopEdges.length; i++) {
-                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getEndStop())) {
+                        if (stop == null || stop.equals(tripPattern.hopEdges[i].getBeginStop())) {
                             graph.removeAlertPatch(tripPattern.hopEdges[i], this);
                         }
                     }
