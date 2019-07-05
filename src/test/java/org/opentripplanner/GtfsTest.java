@@ -33,6 +33,7 @@ import org.opentripplanner.updater.stoptime.TimetableSnapshotSource;
 import com.google.transit.realtime.GtfsRealtime.FeedEntity;
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.google.transit.realtime.GtfsRealtime.TripUpdate;
+import org.opentripplanner.visualizer.GraphVisualizer;
 
 /** Common base class for many test classes which need to load a GTFS feed in preparation for tests. */
 public abstract class GtfsTest extends TestCase {
@@ -136,6 +137,9 @@ public abstract class GtfsTest extends TestCase {
         // TODO rethink whether it makes sense to weight waiting to board _less_ than 1.
         routingRequest.setWaitReluctance(1);
         routingRequest.setWalkBoardCost(30);
+
+        router.graphVisualizer = new GraphVisualizer(router);
+        router.graphVisualizer.run();
 
         List<GraphPath> paths = new GraphPathFinder(router).getPaths(routingRequest);
         TripPlan tripPlan = GraphPathToTripPlanConverter.generatePlan(paths, routingRequest);
