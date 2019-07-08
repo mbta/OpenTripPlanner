@@ -93,7 +93,7 @@ public class SimpleTransfer extends Edge {
 
     @Override
     public String toString() {
-        return "TransferEdge(" +
+        return "SimpleTransfer(" +
                 getFromVertex() + " to " + getToVertex() + ")";
     }
 }
