@@ -42,6 +42,8 @@ public class GTFSToOtpTransitServiceMapper {
             routeMapper, fareAttributeMapper
     );
 
+    private final AreaMapper areaMapper = new AreaMapper();
+
     /**
      * Map from GTFS data to the internal OTP model
      */
@@ -68,6 +70,7 @@ public class GTFSToOtpTransitServiceMapper {
         // remove "recommended" transfers as they break the trip plans
         builder.getTransfers().removeIf(t -> t.getTransferType() == 0);
         builder.getTrips().addAll(tripMapper.map(data.getAllTrips()));
+        builder.getFlexAreas().addAll(areaMapper.map(data.getAllAreas()));
 
         return builder.build();
     }
