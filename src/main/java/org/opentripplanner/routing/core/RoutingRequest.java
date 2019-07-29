@@ -596,7 +596,7 @@ public class RoutingRequest implements Cloneable, Serializable {
      * hops, in order to reduce the amount of hops created when they redundant with regular
      * service.
      */
-    public int flexMinPartialHopLength = 400;
+    public int flexMinPartialHopLength = 50;
 
     /** Saves split edge which can be split on origin/destination search
      *
