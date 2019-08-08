@@ -98,7 +98,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
             updaterManager.execute(new GraphWriterRunnable() {
                 @Override
                 public void run(Graph graph) {
-                    Set<String> blacklist = graph
+                    Set<String> ignoredList = graph
                             .ignoredAlerts
                             .stream()
                             .map(IgnoredAlert::getId)
@@ -107,7 +107,7 @@ public class GtfsEnhancedRealtimeAlertsUpdater extends PollingGraphUpdater {
                     List<GtfsRealtime.FeedEntity> entities = feed
                             .getEntityList()
                             .stream()
-                            .filter(e -> e.hasId() && !blacklist.contains(e.getId()))
+                            .filter(e -> e.hasId() && !ignoredList.contains(e.getId()))
                             .collect(Collectors.toList());
 
                     updateHandler.update(entities);
