@@ -140,7 +140,7 @@ public abstract class GraphPathToTripPlanConverter {
         State[] states = new State[path.states.size()];
         states = path.states.toArray(states);
 
-        State lastState = getLastState(states);
+        State lastTransitState = getLastTransitState(states);
 
         Edge[] edges = new Edge[path.edges.size()];
         edges = path.edges.toArray(edges);
@@ -163,17 +163,17 @@ public abstract class GraphPathToTripPlanConverter {
 
         fixupLegs(itinerary.legs, legsStates);
 
-        itinerary.duration = lastState.getElapsedTimeSeconds();
+        itinerary.duration = lastTransitState.getElapsedTimeSeconds();
         itinerary.startTime = getStartTime(states);
-        itinerary.endTime = makeCalendar(lastState);
+        itinerary.endTime = makeCalendar(lastTransitState);
 
         calculateTimes(itinerary, states);
 
         calculateElevations(itinerary, edges);
 
-        itinerary.walkDistance = lastState.getWalkDistance();
-
-        itinerary.transfers = lastState.getNumBoardings();
+        State finalState = path.states.getLast();
+        itinerary.walkDistance = finalState.getWalkDistance();
+        itinerary.transfers = finalState.getNumBoardings();
         if (itinerary.transfers > 0 && !(states[0].getVertex() instanceof OnboardDepartVertex)) {
             itinerary.transfers--;
         }
@@ -181,7 +181,7 @@ public abstract class GraphPathToTripPlanConverter {
         return itinerary;
     }
 
-    private static State getLastState(State[] states) {
+    private static State getLastTransitState(State[] states) {
         State lastState = states[states.length - 1];
 
         return Arrays
