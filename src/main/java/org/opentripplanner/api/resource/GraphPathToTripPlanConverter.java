@@ -138,8 +138,9 @@ public abstract class GraphPathToTripPlanConverter {
         Itinerary itinerary = new Itinerary();
 
         State[] states = new State[path.states.size()];
-        State lastState = path.states.getLast();
         states = path.states.toArray(states);
+
+        State lastState = getLastState(states);
 
         Edge[] edges = new Edge[path.edges.size()];
         edges = path.edges.toArray(edges);
@@ -178,6 +179,17 @@ public abstract class GraphPathToTripPlanConverter {
         }
 
         return itinerary;
+    }
+
+    private static State getLastState(State[] states) {
+        State lastState = states[states.length - 1];
+
+        return Arrays
+                .stream(states)
+                .filter(s -> s.backEdge instanceof TransitBoardAlight || s.backEdge instanceof StreetEdge)
+                .reduce((first, second) -> second)
+                .orElse(lastState)
+                .getBackState();
     }
 
     private static Calendar getStartTime(State[] states) {
