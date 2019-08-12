@@ -42,6 +42,8 @@ public class GTFSToOtpTransitServiceMapper {
             routeMapper, fareAttributeMapper
     );
 
+    private final IgnoredAlertMapper alertMapper = new IgnoredAlertMapper();
+
     private final AreaMapper areaMapper = new AreaMapper();
 
     /**
@@ -71,6 +73,7 @@ public class GTFSToOtpTransitServiceMapper {
         builder.getTransfers().removeIf(t -> t.getTransferType() == 0);
         builder.getTrips().addAll(tripMapper.map(data.getAllTrips()));
         builder.getFlexAreas().addAll(areaMapper.map(data.getAllAreas()));
+        builder.getIgnoredAlerts().addAll(alertMapper.map(data.getAllIgnoredAlerts()));
 
         return builder.build();
     }
