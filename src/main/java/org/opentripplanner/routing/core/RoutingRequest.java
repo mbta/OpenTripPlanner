@@ -478,7 +478,7 @@ public class RoutingRequest implements Cloneable, Serializable {
      * they require a reservation in order to be used. Such services will only be used if this
      * parameter is true.
      */
-    public boolean flexUseReservationServices = true;
+    public boolean flexUseReservationServices = false;
 
     /**
      * Whether to use eligibility-based services. This parameter only applies to GTFS-Flex
