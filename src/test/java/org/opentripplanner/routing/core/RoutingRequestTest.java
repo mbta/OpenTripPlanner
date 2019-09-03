@@ -69,9 +69,9 @@ public class RoutingRequestTest {
     @Test
     public void testPreferencesPenaltyForShuttle() {
         FeedScopedId id = new FeedScopedId();
-        id.setId("Shuttle-Shuttle");
         Agency agency = new Agency();
         Route route = new Route();
+        route.setDesc("Rail Replacement Bus");
         Trip trip = new Trip();
         RoutingRequest routingRequest = new RoutingRequest();
 
