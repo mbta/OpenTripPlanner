@@ -1423,7 +1423,7 @@ public class RoutingRequest implements Cloneable, Serializable {
         }
         boolean isUnpreferedRoute  = unpreferredRoutes   != null && unpreferredRoutes.matches(route);
         boolean isUnpreferedAgency = unpreferredAgencies != null && unpreferredAgencies.contains(agencyID);
-        boolean isShuttle = route.getId().getId().startsWith("Shuttle-");
+        boolean isShuttle = Optional.ofNullable(route.getDesc()).orElse("").equals("Rail Replacement Bus");
         if (isUnpreferedRoute || isUnpreferedAgency || isShuttle) {
             preferences_penalty += useUnpreferredRoutesPenalty;
         }
