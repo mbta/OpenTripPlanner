@@ -313,6 +313,9 @@ public class RoutingRequest implements Cloneable, Serializable {
     /** Penalty for using a non-preferred transfer */
     public int nonpreferredTransferPenalty = 180;
 
+    /** Penalty for using MBTA shuttles **/
+    public int shuttlePenalty = 600;
+
     /**
      * For the bike triangle, how important time is. 
      * triangleTimeFactor+triangleSlopeFactor+triangleSafetyFactor == 1
@@ -1423,8 +1426,7 @@ public class RoutingRequest implements Cloneable, Serializable {
         }
         boolean isUnpreferedRoute  = unpreferredRoutes   != null && unpreferredRoutes.matches(route);
         boolean isUnpreferedAgency = unpreferredAgencies != null && unpreferredAgencies.contains(agencyID);
-        boolean isShuttle = Optional.ofNullable(route.getDesc()).orElse("").equals("Rail Replacement Bus");
-        if (isUnpreferedRoute || isUnpreferedAgency || isShuttle) {
+        if (isUnpreferedRoute || isUnpreferedAgency) {
             preferences_penalty += useUnpreferredRoutesPenalty;
         }
         return preferences_penalty;

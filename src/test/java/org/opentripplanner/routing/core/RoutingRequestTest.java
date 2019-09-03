@@ -65,20 +65,4 @@ public class RoutingRequestTest {
         route.setAgency(agency);
         assertEquals(0, routingRequest.preferencesPenaltyForRoute(trip.getRoute()));
     }
-
-    @Test
-    public void testPreferencesPenaltyForShuttle() {
-        FeedScopedId id = new FeedScopedId();
-        Agency agency = new Agency();
-        Route route = new Route();
-        route.setDesc("Rail Replacement Bus");
-        Trip trip = new Trip();
-        RoutingRequest routingRequest = new RoutingRequest();
-
-        trip.setRoute(route);
-        route.setId(id);
-        route.setAgency(agency);
-        assertEquals(routingRequest.useUnpreferredRoutesPenalty,
-                routingRequest.preferencesPenaltyForRoute(trip.getRoute()));
-    }
 }
