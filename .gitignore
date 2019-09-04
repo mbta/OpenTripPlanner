@@ -31,3 +31,6 @@ _site/
 *.DS_Store
 lucene/
 var/
+mbta/mbta_otp.zip
+mbta/http/
+mbta/var/
