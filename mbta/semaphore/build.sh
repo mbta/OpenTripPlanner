@@ -1,8 +1,8 @@
 #!/bin/bash
-# should be run as ./semaphore/build.sh
+# should be run as ./mbta/semaphore/build.sh
 set -e
 
-./../update_pbf.sh
-./../update_gtfs.sh
-./../build.sh
-./../make_deploy.sh
+mbta/semaphore/update_pbf.sh
+mbta/semaphore/update_gtfs.sh
+mbta/semaphore/build.sh
+mbta/semaphore/make_deploy.sh
