@@ -4,7 +4,7 @@
 set -e
 export EB_VERSION=`git rev-parse --short HEAD`-`date +%s`
 export GIT_DESCRIPTION=`git show -s --format=%s HEAD | cut -c -200`
-export FEED_DESCRIPTION=`python semaphore/gtfs_feed_version.py`
+export FEED_DESCRIPTION=`python mbta/semaphore/gtfs_feed_version.py`
 aws s3 cp mbta_otp.zip s3://$S3_BUCKET_NAME/"$EB_APP_NAME"/"$EB_VERSION".zip
 aws elasticbeanstalk create-application-version --application-name "$EB_APP_NAME" --version-label "$EB_VERSION" --source-bundle S3Bucket=$S3_BUCKET_NAME,S3Key="$EB_APP_NAME/$EB_VERSION.zip" --description "GTFS: $FEED_DESCRIPTION Git: $GIT_DESCRIPTION"
 aws elasticbeanstalk update-environment --environment-name "$EB_ENV_NAME" --version-label "$EB_VERSION"
