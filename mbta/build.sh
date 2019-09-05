@@ -6,4 +6,4 @@ mvn -Dmaven.repo.local="${SEMAPHORE_CACHE_DIR}/.m2/" clean install -Dmaven.test.
 popd
 
 cp ./OpenTripPlanner/target/otp-1.4.0-SNAPSHOT-shaded.jar .
-java -Xmx4G -jar otp-1.4.0-SNAPSHOT-shaded.jar --build var/graphs/mbta/ --basePath var/
+java -Xmx8G -jar otp-1.4.0-SNAPSHOT-shaded.jar --build var/graphs/mbta/ --basePath var/
