@@ -9,11 +9,9 @@ change-java-version 8
 export M2_CACHE="${SEMAPHORE_CACHE_DIR}/.m2/"
 mkdir -p "${M2_CACHE}"
 
+pushd "${SEMAPHORE_PROJECT_DIR}/../"
 rm -rf onebusaway-gtfs-modules
 git clone git@github.com:mbta/onebusaway-gtfs-modules.git --depth 1
-pushd onebusaway-gtfs-modules
+cd onebusaway-gtfs-modules
 mvn -Dmaven.repo.local="${M2_CACHE}" clean install -Dmaven.test.skip=true -Dlicense.skip=true
 popd
-
-rm -rf OpenTripPlanner
-git clone git@github.com:mbta/OpenTripPlanner.git --depth 1
