@@ -89,11 +89,18 @@ def get_trip_plans(environment, from_place, to_place, trip_date, arrive_by):
         "arriveBy": "true" if arrive_by else "false",
     }
 
+    response = None
+
     try:
-        json_response = requests.get(url, params).json()
-        return json_response
+        response = requests.get(url, params).text
     except Exception as err:
-        print(f"Unable to parse JSON response from {url}: {err}")
+        print(f"Unable to get response from {url}:\nException: {err}")
+        exit(1)
+
+    try:
+        return json.loads(response)
+    except Exception as err:
+        print(f"Unable to parse JSON response:\n{response}\n\nException: {err}")
         exit(1)
 
 
