@@ -7,7 +7,7 @@ The main Java server code is in `src/main/`. OTP also includes a Javascript clie
 Additional information and instructions are available in the [main documentation](http://opentripplanner.readthedocs.org/en/latest/), including a 
 [quick introduction](http://opentripplanner.readthedocs.org/en/latest/Basic-Usage/).
 
-[![Build Status](https://travis-ci.org/opentripplanner/OpenTripPlanner.svg?branch=master)](https://travis-ci.org/opentripplanner/OpenTripPlanner)
+[![Build Status](https://semaphoreci.com/api/v1/mbta/opentripplanner/branches/master/badge.svg)](https://semaphoreci.com/mbta/opentripplanner)
 
 ## Development 
 
