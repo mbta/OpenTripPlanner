@@ -16,17 +16,24 @@ jobs:
         with:
           path: ${{ github.workspace }}/OTP
 
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 8
-          settings-path: ${{ github.workspace }}/OTP/mbta/semaphore
+      # - uses: actions/setup-java@v2
+      #   with:
+      #     distribution: 'adopt'
+      #     java-version: 8
+      #     settings-path: ${{ github.workspace }}/OTP/mbta/semaphore
       
       - uses: actions/checkout@v2
         with:
           repository: mbta/onebusaway-gtfs-modules
           path: ${{ github.workspace }}/onebusaway-gtfs-modules
           fetch-depth: 1
+
+      - uses: asdf-vm/actions/setup@v1
+      - working-directory: ${{ github.workspace }}/onebusaway-gtfs-modules
+        run: |
+          asdf plugin-add java
+          asdf plugin-add maven
+          asdf install
 
       - name: Install onebusaway-gtfs-modules
         run: |
