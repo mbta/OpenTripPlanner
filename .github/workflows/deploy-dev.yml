@@ -12,7 +12,7 @@ jobs:
     environment: dev
     concurrency: dev
     env:
-      SETTINGS_PATH: ${{ github.workspace }}/OTP/mbta/semaphore/custom-settings.xml
+      SETTINGS_PATH: ${{ github.workspace }}/OTP/mbta/ci-maven-settings.xml
     
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 8
-          settings-path: ${{ github.workspace }}/OTP/mbta/semaphore
+          settings-path: ${{ github.workspace }}/OTP/mbta
       
       - uses: actions/checkout@v2
         with:
